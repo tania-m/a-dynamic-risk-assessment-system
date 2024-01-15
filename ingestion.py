@@ -66,7 +66,7 @@ def merge_multiple_dataframe():
     try:
         loaded_data.to_csv(output_file_path, index=False)
     except FileNotFoundError:
-        print("Target folder doesn't seem to exsiting. Creating it...")
+        print("Target folder doesn't seem to existing. Creating it...")
         os.mkdir(output_folder_path)
         loaded_data.to_csv(output_file_path, index=False)
     print(f"Dataset written to {output_file_path}")
