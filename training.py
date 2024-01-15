@@ -105,7 +105,7 @@ def train_model():
     print(f"Saving trained model to {model_path} in pickle format to {model_full_path}")
     try:
         pickle.dump(logistic_regression_model, open(model_full_path, "wb"))
-    except:
+    except FileNotFoundError:
         print("Target folder doesn't seem to existing. Creating it...")
         os.mkdir(model_path)
         pickle.dump(logistic_regression_model, open(model_full_path, "wb"))
