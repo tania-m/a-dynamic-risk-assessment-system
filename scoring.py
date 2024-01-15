@@ -29,7 +29,7 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
-print(f"Dataset used source folder: {dataset_csv_path}")
+print(f"Used dataset source folder: {dataset_csv_path}")
 
 model_path = os.path.join(config['output_model_path'])
 print(f"Trained model source folder: {model_path}")
