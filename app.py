@@ -22,25 +22,25 @@ dataset_csv_path = os.path.join(config['output_folder_path'])
 prediction_model = None
 
 
-#######################Prediction Endpoint
+####################### Prediction Endpoint
 @app.route("/prediction", methods=['POST','OPTIONS'])
 def predict():        
     #call the prediction function you created in Step 3
     return #add return value for prediction outputs
 
-#######################Scoring Endpoint
+####################### Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
 def stats():        
     #check the score of the deployed model
     return #add return value (a single F1 score number)
 
-#######################Summary Statistics Endpoint
+####################### Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():        
     #check means, medians, and modes for each column
     return #return a list of all calculated summary statistics
 
-#######################Diagnostics Endpoint
+####################### Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
 def stats():        
     #check timing and percent NA values

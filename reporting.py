@@ -9,14 +9,14 @@ import json
 import os
 
 
-###############Load config.json and get path variables
+############### Load config.json and get path variables
 with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
 
 
-##############Function for reporting
+############## Function for reporting
 def score_model():
     """ 
     Scores the models, creates plots:
