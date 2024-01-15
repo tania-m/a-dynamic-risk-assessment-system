@@ -12,29 +12,44 @@ Author: tania-m
 Date: January 15th 2024
 """
 
-from flask import Flask, session, jsonify, request
-import pandas as pd
-import numpy as np
-import pickle
 import os
-from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+import shutil
 import json
 
 
-##################Load config.json and correct path variable
+################## Load config.json and correct path variable
 with open('config.json','r') as f:
     config = json.load(f) 
 
-dataset_csv_path = os.path.join(config['output_folder_path']) 
+dataset_csv_path = os.path.join(config['output_folder_path'])
+print(f"Dataset used source folder: {dataset_csv_path}")
+
 prod_deployment_path = os.path.join(config['prod_deployment_path']) 
+print(f"Prod deployment folder: {prod_deployment_path}")
 
 
-####################function for deployment
-def store_model_into_pickle(model):
-    #copy the latest pickle file, the latestscore.txt value, and the ingestfiles.txt file into the deployment directory
-        
-        
-        
+#################### Function for deployment
+def move_deployment_files():
+    """ 
+    copy the latest model as pickle file, 
+    the latestscore.txt value, 
+    and the ingestfiles.txt file 
+    into the deployment directory
+    
+    Output: writes the resulting f1_score to `latestscore.txt`
+    """
+    
+    ingestion_report_name = "ingestedfiles.txt"
+    ingestion_report_source_path = os.path.join(dataset_csv_path, ingestion_report_name)
+    ingestion_report_target_path = os.path.join(prod_deployment_path, ingestion_report_name)
+    print(f"Copying {ingestion_report_name} from {ingestion_report_source_path} to the deployment directory {prod_deployment_path}")
+    
+    try:
+        shutil.copy(ingestion_report_source_path, ingestion_report_target_path)
+    except FileNotFoundError:
+        print("Target folder doesn't seem to existing. Creating it...")
+        os.mkdir(prod_deployment_path)
+        shutil.copy(ingestion_report_source_path, ingestion_report_target_path)
 
+if __name__ == "__main__":
+    move_deployment_files()

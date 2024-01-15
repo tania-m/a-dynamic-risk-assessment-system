@@ -24,7 +24,7 @@ from training import prepare_dataset
 # - The other three numeric columns will all be used as predictors in the model.
 
 
-#################Load config.json and get path variables
+################# Load config.json and get path variables
 with open('config.json','r') as f:
     config = json.load(f) 
 
@@ -38,7 +38,7 @@ test_data_path = os.path.join(config['test_data_path'])
 print(f"Test data folder: {dataset_csv_path}")
 
 
-#################Function for model scoring
+################# Function for model scoring
 def score_model():
     """ 
     Score model:
@@ -76,7 +76,8 @@ def score_model():
         try:
             result_file.write(str(f1_score))
         except FileNotFoundError:
-            # Should not happen since we loaded the model from there
+            # Should not happen currently since we loaded the model from there,
+            # but in case we ever change the scoring file's location...
             print("Target folder doesn't seem to existing. Creating it...")
             os.mkdir(model_path)
             result_file.write(str(f1_score))
