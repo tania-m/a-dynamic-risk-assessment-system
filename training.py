@@ -24,7 +24,10 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
+print(f"Dataset used for training folder: {dataset_csv_path}")
+
 model_path = os.path.join(config['output_model_path']) 
+print(f"Model output folder: {model_path}")
 
 
 def prepare_for_training(df):

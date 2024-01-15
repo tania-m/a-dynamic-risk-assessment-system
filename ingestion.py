@@ -25,7 +25,7 @@ input_folder_path = config['input_folder_path']
 print(f"Input folder: {input_folder_path}")
 
 output_folder_path = config['output_folder_path']
-print(f"Putput folder: {output_folder_path}")
+print(f"Output folder: {output_folder_path}")
 
 
 ############# Function for data ingestion
