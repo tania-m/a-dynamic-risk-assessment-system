@@ -24,15 +24,16 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
-print(f"Dataset used for training folder: {dataset_csv_path}")
+print(f"Dataset used for training source folder: {dataset_csv_path}")
 
 model_path = os.path.join(config['output_model_path']) 
 print(f"Model output folder: {model_path}")
 
 
-def prepare_for_training(df):
+################### Prepare datasets for training
+def prepare_dataset(df):
     """ 
-    Prepare the dataset for training:
+    Prepare the dataset:
     - The dataset's final column, "exited", is the target variable for predictions
     - The first column, "corporation", will not be used in modeling. 
     - The other three numeric columns will all be used as predictors in the model.
@@ -89,7 +90,7 @@ def train_model():
     dataframe = pd.read_csv(input_data_path)
     
     print("Preparing dataset for training")
-    X, y = prepare_for_training(dataframe)
+    X, y = prepare_dataset(dataframe)
     
     print("train_test_split")
     test_size_proportion = 0.20 # proportion of the dataset to include in the test split
