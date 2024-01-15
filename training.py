@@ -90,7 +90,7 @@ def train_model():
     
     print("train_test_split")
     test_size_proportion = 0.20 # proportion of the dataset to include in the test split
-    random_state_seed = 42 # to make runs reproduceable
+    random_state_seed = 42 # set seed to make runs reproduceable
     x_train, x_test, y_train, y_test = train_test_split(X, y,  
                                                         test_size=test_size_proportion,
                                                         random_state=random_state_seed)
