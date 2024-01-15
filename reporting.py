@@ -9,7 +9,6 @@ import json
 import os
 
 
-
 ###############Load config.json and get path variables
 with open('config.json','r') as f:
     config = json.load(f) 
@@ -17,15 +16,15 @@ with open('config.json','r') as f:
 dataset_csv_path = os.path.join(config['output_folder_path']) 
 
 
-
-
 ##############Function for reporting
 def score_model():
-    #calculate a confusion matrix using the test data and the deployed model
-    #write the confusion matrix to the workspace
-
-
-
+    """ 
+    Scores the models, creates plots:
+    - calculates a confusion matrix using the test data and the deployed model
+    - writes the confusion matrix to the workspace
+    
+    Output: list containing all predictions
+    """
 
 
 if __name__ == '__main__':
