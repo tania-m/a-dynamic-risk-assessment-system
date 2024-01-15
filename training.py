@@ -19,7 +19,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import json
 
-###################Load config.json and get path variables
+################### Load config.json and get path variables
 with open('config.json','r') as f:
     config = json.load(f) 
 
@@ -27,17 +27,64 @@ dataset_csv_path = os.path.join(config['output_folder_path'])
 model_path = os.path.join(config['output_model_path']) 
 
 
-#################Function for training the model
+def prepare_for_training(df):
+    """ 
+    Prepare the dataset for training:
+    - The dataset's final column, "exited", is the target variable for predictions
+    - The first column, "corporation", will not be used in modeling. 
+    - The other three numeric columns will all be used as predictors in the model.
+    """
+    
+    # Remove first column and keep only predictors
+    predictors = df.loc[:, 
+                        ["lastmonth_activity", 
+                         "lastyear_activity",
+                         "number_of_employees"]]
+    
+    # Separate "exited", as the target variable for predictions
+    # No encoding done here
+    predicted = df["exited"]
+    
+    # Use more common var names
+    X = predictors
+    y = predicted
+    
+    return X, y
+
+
+################# Function for training the model
 def train_model():
     
-    #use this logistic regression for training
-    LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                    intercept_scaling=1, l1_ratio=None, max_iter=100,
-                    multi_class='warn', n_jobs=None, penalty='l2',
-                    random_state=0, solver='liblinear', tol=0.0001, verbose=0,
-                    warm_start=False)
+    # Using this logistic regression for training
+    print("Configuring logistic regression used for training")
+    logistic_regression_model = LogisticRegression(
+        C=1.0, class_weight=None, dual=False, fit_intercept=True,
+        intercept_scaling=1, l1_ratio=None, max_iter=100,
+        multi_class='ovr', n_jobs=None, penalty='l2',
+        random_state=0, solver='liblinear', tol=0.0001, verbose=0,
+        warm_start=False)
     
-    #fit the logistic regression to your data
+    # Loading data and fitting the logistic regression to the data
+    input_data_path = os.path.join(dataset_csv_path, "finaldata.csv")
+    print(f"Reading ingested data from {input_data_path}")
+    dataframe = pd.read_csv(input_data_path)
+    
+    print("Preparing dataset for training")
+    X, y = prepare_for_training(dataframe)
+    
+    print("train_test_split")
+    test_size_proportion = 0.20 # proportion of the dataset to include in the test split
+    random_state_seed = 42 # to make runs reproduceable
+    x_train, x_test, y_train, y_test = train_test_split(X, y,  
+                                                        test_size=test_size_proportion,
+                                                        random_state=random_state_seed)
+    
+    print("Fitting logistic regression model")
+    logistic_regression_model.fit(x_train, y_train)
+    print("Fitting logistic regression model DONE!")
     
     #write the trained model to your workspace in a file called trainedmodel.pkl
 
+
+if __name__ == "__main__":
+    train_model()
