@@ -1,3 +1,14 @@
+# Module name: training
+"""
+Model training for risk assessment data science pipeline
+
+Uses config from config.json
+Ingestion record will be in output_folder_path/ingestedfiles.txt
+
+Author: tania-m
+Date: January 15th 2024
+"""
+
 from flask import Flask, session, jsonify, request
 import pandas as pd
 import numpy as np

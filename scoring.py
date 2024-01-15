@@ -1,3 +1,14 @@
+# Module name: scoring
+"""
+Model scoring for risk assessment data science pipeline
+
+Uses config from config.json
+Scores model trained by training.py
+
+Author: tania-m
+Date: January 15th 2024
+"""
+
 from flask import Flask, session, jsonify, request
 import pandas as pd
 import numpy as np

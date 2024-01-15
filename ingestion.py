@@ -1,6 +1,7 @@
 # Module name: ingestion
 """
 Data ingestion for risk assessment data science pipeline
+
 Uses config from config.json
 Ingestion record will be in output_folder_path/ingestedfiles.txt
 
@@ -77,6 +78,30 @@ def merge_multiple_dataframe():
             f.write(f"{str(record[0])} - File {record[1]} ingested\n")
     print(f"Ingestion record written to {ingestion_record_path}")
 
+
+#############
+# About the data in finaldata.csv:
+    
+# The data in finaldata.csv represents records of corporations, 
+# their characteristics, and their historical attrition records. 
+# One row represents a hypothetical corporation. 
+
+# There are five columns in the dataset:
+# "corporation", which contains four-character 
+#     abbreviations for names of corporations
+# "lastmonth_activity", which contains the level of activity 
+#     associated with each corporation over the previous month
+# "lastyear_activity", which contains the level of activity 
+#     associated with each corporation over the previous year
+# "number_of_employees", which contains the number of employees 
+#     who work for the corporation
+# "exited", which contains a record of whether the corporation 
+#     exited their contract (1 indicates that the corporation exited, 
+#                            and 0 indicates that the corporation did not exit)
+#
+# The dataset's final column, "exited", is the target variable for predictions
+# from this data science pipeline
+#############
 
 if __name__ == '__main__':
     merge_multiple_dataframe()
