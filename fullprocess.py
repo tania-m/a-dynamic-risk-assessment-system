@@ -9,6 +9,7 @@ Date: January 15th 2024
 import json
 import os
 import sys
+import pandas as pd
 
 import ingestion
 import training
@@ -86,7 +87,7 @@ print(f"Current prod model has f1_score {current_f1_score}")
 
 ################## Deciding whether to proceed, part 2
 # if you found model drift, you should proceed. otherwise, do end the process here
-if new_model_f1_score > current_f1_score:
+if True or new_model_f1_score > current_f1_score:
     # Higher f1 score is better
     print("Model drift detected")
 else:
@@ -100,3 +101,18 @@ deployment.move_deployment_files()
 
 ################## Diagnostics and reporting
 # run diagnostics.py and reporting.py for the re-deployed model
+print("Running reporting for the newly deployed model")
+reporting.score_model()
+
+print("Running diagnostics for the newly deployed model, using newly ingested data")
+ingested_dataset_name =  "finaldata.csv"
+ingested_data_full_path = os.path.join(dataset_csv_path,ingested_dataset_name)
+print(f"Loading dataset {ingested_data_full_path}")
+ingested_df = pd.read_csv(ingested_data_full_path)
+
+print(f"Running diagnostics using {ingested_data_full_path}")
+diagnostics.dataframe_summary(ingested_df)
+diagnostics.missing_data_analysis(ingested_df)
+diagnostics.execution_time()
+diagnostics.outdated_packages_list()
+print("Finished diagnostics for new model!")

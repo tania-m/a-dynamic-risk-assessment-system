@@ -84,7 +84,7 @@ def diagnostics():
     
     timings = execution_time()
     outdated_packages = outdated_packages_list()
-    missing_data_analysis_results = missing_data_analysis()
+    missing_data_analysis_results = missing_data_analysis(None)
     
     results = [ ["timings", timings[0], timings[1]],
                 ["outdated_packages", outdated_packages],

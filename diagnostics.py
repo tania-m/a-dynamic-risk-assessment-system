@@ -68,7 +68,7 @@ def model_predictions(df):
     return y_predicted
 
 
-def missing_data_analysis(df=None):
+def missing_data_analysis(df):
     """ 
     Calculates what percent of each column of the 
     ingested dataset consists of NA values
@@ -84,7 +84,7 @@ def missing_data_analysis(df=None):
     
     print("Computing dataframe missing data points")
     
-    if df == None:
+    if df is None:
         print("Diagnosing ingested dataset")
         ingestion_dataset_name = "finaldata.csv"
         ingestion_dataset_full_path = os.path.join(output_folder_path, ingestion_dataset_name)
