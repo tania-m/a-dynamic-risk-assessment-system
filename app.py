@@ -13,7 +13,7 @@ import os
 
 # From the data science pipeline
 from scoring import score_model
-from diagnostics import model_predictions, dataframe_summary
+from diagnostics import model_predictions, dataframe_summary, execution_time
 
 
 ######################Set up variables for use in our script
@@ -81,8 +81,9 @@ def diagnostics():
     - ingestion and training timing
     - percent NA values
     """ 
-    #check timing and percent NA values
-    return #add return value for all diagnostics
+    
+    timings = execution_time()
+    return str(timings)
 
 if __name__ == "__main__":
     host = "0.0.0.0"

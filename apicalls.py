@@ -37,18 +37,19 @@ headers = {"Content-type": "application/json", "Accept": "text/plain"}
 # scoring_url = f"{URL}/scoring"
 # print(f"Calling /scoring endpoint at {scoring_url}")
 # scoring_response = requests.get(scoring_url, headers=headers).text
-# print(f"{scoring_url} response: {scoring_response}")
+# print(f"GET {scoring_url} response: {scoring_response}")
 
-print("Calling /summarystats endpoint")
-predict_dataset_file = "testdata.csv"
-predicat_dataset_path = os.path.join(test_data_path, predict_dataset_file)
-summarystats_url = f"{URL}/summarystats"
-summarystats_response = requests.get(summarystats_url, json={"datafile": predicat_dataset_path}, headers=headers).text
-print(f"{summarystats_url} response for summary of {predicat_dataset_path}: {summarystats_response}")
+# print("Calling /summarystats endpoint")
+# predict_dataset_file = "testdata.csv"
+# predicat_dataset_path = os.path.join(test_data_path, predict_dataset_file)
+# summarystats_url = f"{URL}/summarystats"
+# summarystats_response = requests.get(summarystats_url, json={"datafile": predicat_dataset_path}, headers=headers).text
+# print(f"GET {summarystats_url} response for summary of {predicat_dataset_path}: {summarystats_response}")
 
-# print("Calling /diagnostics endpoint")
-# diagnostics_url = f"{URL}/diagnostics"
-# diagnostics_response = requests.get(diagnostics_url, headers=headers)
+print("Calling /diagnostics endpoint")
+diagnostics_url = f"{URL}/diagnostics"
+diagnostics_response = requests.get(diagnostics_url, headers=headers).text
+print(f"GET {diagnostics_url} response: {diagnostics_response}")
 
 # # combine all API responses into a (json) dictionnary
 # responses = {
