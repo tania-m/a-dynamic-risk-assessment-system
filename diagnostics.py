@@ -134,14 +134,40 @@ def dataframe_summary(df, columns_of_interest):
 
 
 ################## Function to get timings
+def get_command_timing(command):
+    """ 
+    Get a command's duration in seconds
+    
+    Input: Command to measure execution time for
+    Output: Command duration in s
+    """
+    
+    start = timeit.default_timer()
+    os.system(command)
+    end = timeit.default_timer()
+    return end - start
+
+
 def execution_time():
     """ 
-    Computes timing of training.py and ingestion.py
+    Computes timing of training (training.py)
+    and ingestion (ingestion.py)
     
     Output: list of 2 timing values in seconds
     """
+    
+    # Running ingestion command to get timing
+    ingestion_command = "python3 ingestion.py"
+    ingestion_duration = get_command_timing(ingestion_command)
+    
+    # Running training command to get timing
+    training_command = "python3 training.py"
+    training_duration = get_command_timing(training_command)
 
-    return
+    timings =  [ingestion_duration, training_duration]
+    print(f"Ingestion timing: {timings[0]} seconds")
+    print(f"Training timing: {timings[1]} seconds")
+    return timings
 
 
 ################## Function to check dependencies
@@ -173,5 +199,5 @@ if __name__ == '__main__':
     print(f"Running diagnostics using {ingested_data_full_path}")
     dataframe_summary(ingested_df, predictors)
     missing_data_analysis(ingested_df)
-    # execution_time()
+    execution_time()
     # outdated_packages_list()
