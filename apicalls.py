@@ -60,7 +60,6 @@ api_calls_responses = {
     "Summary_Stats": summarystats_response,
     "Diagnostics": diagnostics_response,
 }
-print(api_calls_responses)
 
 # write the responses to your workspace
 api_responses_txt_file = "apireturns.txt"

@@ -13,7 +13,7 @@ import os
 
 # From the data science pipeline
 from scoring import score_model
-from diagnostics import model_predictions, dataframe_summary, execution_time
+from diagnostics import model_predictions, dataframe_summary, execution_time, outdated_packages_list
 
 
 ######################Set up variables for use in our script
@@ -83,7 +83,11 @@ def diagnostics():
     """ 
     
     timings = execution_time()
-    return str(timings)
+    outdated_packages = outdated_packages_list()
+    
+    results = [ ["timings", timings[0], timings[1]],
+                ["outdated_packages", outdated_packages]]
+    return str(results)
 
 if __name__ == "__main__":
     host = "0.0.0.0"
