@@ -31,7 +31,7 @@ def model_predictions():
     return 
 
 
-def missing_data_analysis():
+def missing_data_analysis(df, columns_of_interest):
     """ 
     Calculates what percent of each column of the 
     ingested dataset consists of NA values
@@ -46,14 +46,35 @@ def missing_data_analysis():
 
 
 ################## Function to get summary statistics
-def dataframe_summary():
+def dataframe_summary(df, columns_of_interest):
     """ 
     Computes summary statistics
     
-    Output: list containing all summary statistics
+    Output: table containing all summary statistics,
+    with each row summarizing one predictor column
     """
+    
+    print("Dataframe overview statistics")
+    print(df.describe())
 
-    return 
+    summary_statistics = []
+    statistics_row = []
+    summary_statistics.append(["column_name", "mean", "median", "std", "min", "max"])
+
+    for column in columns_of_interest:
+        statistics_row = []
+        statistics_row.append(column)
+        statistics_row.append(df[column].mean())
+        statistics_row.append(df[column].median())
+        statistics_row.append(df[column].std())
+        statistics_row.append(df[column].min())
+        statistics_row.append(df[column].max())
+        
+        summary_statistics.append(statistics_row)
+    
+    print("Extracted dataframe statistics")
+    print(summary_statistics)
+    return summary_statistics
 
 
 ################## Function to get timings
@@ -80,8 +101,17 @@ def outdated_packages_list():
 
 
 if __name__ == '__main__':
-    model_predictions()
-    dataframe_summary()
-    missing_data_analysis()
-    execution_time()
-    outdated_packages_list()
+    ingested_dataset_name =  "finaldata.csv"
+    ingested_data_full_path = os.path.join(dataset_csv_path,ingested_dataset_name)
+    print(f"Loading dataset {ingested_data_full_path}")
+    ingested_df = pd.read_csv(ingested_data_full_path)
+
+    predictors = ["lastmonth_activity", "lastyear_activity", "number_of_employees"]
+
+    print(f"Running diagnostics using {ingested_dataset_name}")
+
+    # model_predictions()
+    dataframe_summary(ingested_df, predictors)
+    # missing_data_analysis(ingested_df, predictors)
+    # execution_time()
+    # outdated_packages_list()
