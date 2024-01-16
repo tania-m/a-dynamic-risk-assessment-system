@@ -13,7 +13,7 @@ import os
 
 # From the data science pipeline
 from scoring import score_model
-from diagnostics import model_predictions, dataframe_summary, execution_time, outdated_packages_list
+from diagnostics import model_predictions, dataframe_summary, execution_time, outdated_packages_list, missing_data_analysis
 
 
 ######################Set up variables for use in our script
@@ -84,9 +84,11 @@ def diagnostics():
     
     timings = execution_time()
     outdated_packages = outdated_packages_list()
+    missing_data_analysis_results = missing_data_analysis()
     
     results = [ ["timings", timings[0], timings[1]],
-                ["outdated_packages", outdated_packages]]
+                ["outdated_packages", outdated_packages],
+                ["missing_data", missing_data_analysis_results]]
     return str(results)
 
 if __name__ == "__main__":
