@@ -35,7 +35,7 @@ model_path = os.path.join(config['output_model_path'])
 print(f"Trained model source folder: {model_path}")
 
 test_data_path = os.path.join(config['test_data_path']) 
-print(f"Test data folder: {dataset_csv_path}")
+print(f"Test data folder: {test_data_path}")
 
 
 ################# Function for model scoring
@@ -82,6 +82,8 @@ def score_model():
             os.mkdir(model_path)
             result_file.write(str(f1_score))
     print(f"Scoring result saved to {scoring_result_filename}")
+    
+    return f1_score
 
 
 if __name__ == "__main__":

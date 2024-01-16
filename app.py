@@ -8,14 +8,10 @@ Date: January 15th 2024
 
 from flask import Flask, session, jsonify, request
 import pandas as pd
-import numpy as np
-import pickle
-import create_prediction_model
-import diagnosis 
-import predict_exited_from_saved_model
+from scoring import score_model
+import diagnostics 
 import json
 import os
-
 
 
 ######################Set up variables for use in our script
@@ -36,18 +32,27 @@ prediction_model = None
 def predict():
     """ 
     Prediction route
-    """  
-    #call the prediction function you created in Step 3
-    return #add return value for prediction outputs
+    """
+    
+    prediction_dataset_path = request.json.get("datafile")
+    print(f"Prediction requested for dataset at path {prediction_dataset_path}")
+    
+    predict_df = pd.read_csv(prediction_dataset_path)
+    print("Dataframe for predictions loaded")
+    
+    print("Getting predictions")
+    y_pred = diagnostics.model_predictions(predict_df)
+    
+    return str(y_pred)
 
 ####################### Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
-def stats():  
+def scoring():  
     """ 
     Scoring results route
     """       
-    #check the score of the deployed model
-    return #add return value (a single F1 score number)
+    
+    return str(score_model())
 
 ####################### Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
@@ -60,14 +65,19 @@ def stats():
 
 ####################### Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
-def stats():
+def diagnostics():
     """ 
-    iagnostics route:
+    Diagnostics route:
     - ingestion and training timing
     - percent NA values
     """ 
     #check timing and percent NA values
     return #add return value for all diagnostics
 
-if __name__ == "__main__":    
-    app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
+if __name__ == "__main__":
+    host = "0.0.0.0"
+    port=8080
+    print("#############################################################") 
+    print(f"Running app server on host {host} and port {port}")
+    print("#############################################################")
+    app.run(host=host, port=port, debug=True, threaded=True)
