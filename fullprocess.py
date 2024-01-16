@@ -10,7 +10,7 @@ import json
 import os
 import sys
 
-from ingestion import merge_multiple_dataframe
+import ingestion
 import training
 import scoring
 import deployment
@@ -62,11 +62,10 @@ list_difference = list(set(source_files_list) - set(ingestion_list))
 # if you found new data, you should proceed. otherwise, do end the process here
 if len(list_difference) > 0:
     print(f"Found new data files. Running new ingestion for {str(list_difference)}")
-    merge_multiple_dataframe()
+    ingestion.merge_multiple_dataframe()
 else:
     print("No new data files. Pipeline execution ending")
     sys.exit(0)
-
 
 ################## Checking for model drift
 # check whether the score from the deployed model is different from the score from the model that uses the newest ingested data
