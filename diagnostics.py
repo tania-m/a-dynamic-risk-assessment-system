@@ -41,7 +41,8 @@ def missing_data_analysis(df):
         the number of columns in the dataset 
         Each row of the list will be the 
         column name and the percent of NA values 
-        in that particular column
+        in that particular column (percent as float,
+        between 0.0 and 1.0)
     """
     
     print("Computing dataframe missing data points")
@@ -61,10 +62,8 @@ def missing_data_analysis(df):
     for column in columns_of_interest:
         missing_data_row = []
         missing_data_row.append(column)
-        
         na_values = df[column].isna().sum()
         missing_data_row.append(na_values/total_rows)
-        
         missing_data.append(missing_data_row)
 
     print(missing_data)
