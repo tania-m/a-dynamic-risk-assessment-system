@@ -82,7 +82,7 @@ def missing_data_analysis(df):
         between 0.0 and 1.0)
     """
     
-    print("Computing dataframe missing data points")
+    print("Computing dataframe missing data points for data integrity check")
     
     if df is None:
         print("Diagnosing ingested dataset")

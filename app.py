@@ -55,13 +55,13 @@ def scoring():
     Scoring results route
     """       
     
+    print("Requested scores for current model")
     return str(score_model())
 
 
 ####################### Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():        
-    #check means, medians, and modes for each column
     """ 
     Summary stats route
     """ 
@@ -82,6 +82,8 @@ def diagnostics():
     - percent NA values
     """ 
     
+    print("Requested current model diagnostics")
+    
     timings = execution_time()
     outdated_packages = outdated_packages_list()
     missing_data_analysis_results = missing_data_analysis(None)
@@ -90,6 +92,7 @@ def diagnostics():
                 ["outdated_packages", outdated_packages],
                 ["missing_data", missing_data_analysis_results]]
     return str(results)
+
 
 if __name__ == "__main__":
     host = "0.0.0.0"
