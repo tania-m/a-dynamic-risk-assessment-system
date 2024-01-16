@@ -66,12 +66,14 @@ print(api_calls_responses)
 api_responses_txt_file = "apireturns.txt"
 api_responses_file = "apireturns.json"
 
+# Saving responses as text
 api_response_txt_file_path = os.path.join(model_path, api_responses_txt_file)
 with open(api_response_txt_file_path, "w") as written_file:
     written_file.write(json.dumps(api_calls_responses))
-    
+print(f"Saved API responses as text to {api_response_txt_file_path}")
+
+# Saving results as JSON may make it easier to re-read the data later on
 api_response_json_file_path = os.path.join(model_path, api_responses_file)
 with open(api_response_json_file_path, "w") as written_file:
     written_file.write(json.dumps(api_calls_responses))
-    
-print(f"Saved API responses as text to {api_response_txt_file_path} as JSON to {api_response_json_file_path}")
+print(f"Saved API responses as JSON to {api_response_json_file_path}")
