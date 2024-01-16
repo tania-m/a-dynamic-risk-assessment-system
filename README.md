@@ -36,5 +36,7 @@ This project has 5 steps:
 
 ### Process Automation
 
-- Write a script and cron job that automatically run all previous steps at regular intervals.
 ![Process Automation schema](https://github.com/tania-m/a-dynamic-risk-assessment-system/blob/main/images/pipeline-fullprocess.jpg)
+
+- Automate the data science pipeline.
+- Write a script and cron job that automatically run all previous steps at regular intervals.
