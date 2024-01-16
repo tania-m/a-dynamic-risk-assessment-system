@@ -29,6 +29,9 @@ print(f"Dataset used for training source folder: {dataset_csv_path}")
 model_path = os.path.join(config['output_model_path']) 
 print(f"Model output folder: {model_path}")
 
+prod_deployment_path = os.path.join(config['prod_deployment_path']) 
+print(f"Prod deployment folder: {prod_deployment_path}")
+
 print('################################################')
 ################## Check and read new data
 # first, read ingestedfiles.txt
@@ -69,14 +72,31 @@ else:
 
 ################## Checking for model drift
 # check whether the score from the deployed model is different from the score from the model that uses the newest ingested data
+print("Training model based on new data")
+training.train_model()
+new_model_f1_score = scoring.score_model()
+print(f"New model has f1_score of {new_model_f1_score}")
 
+deployed_model_score = "latestscore.txt"
+deployed_model_score_full_path = os.path.join(prod_deployment_path, deployed_model_score)
+print(f"Read current prod model score from {deployed_model_score_full_path}")
+with open(deployed_model_score_full_path, "r") as f1_score_file:
+    current_f1_score = str(f1_score_file.read())
+print(f"Current prod model has f1_score {current_f1_score}")
 
 ################## Deciding whether to proceed, part 2
 # if you found model drift, you should proceed. otherwise, do end the process here
-
+if new_model_f1_score > current_f1_score:
+    # Higher f1 score is better
+    print("Model drift detected")
+else:
+    print("No model drift. Pipeline execution ending")
+    sys.exit(0)
 
 ##################Re-deployment
 # if you found evidence for model drift, re-run the deployment.py script
+print("Deploying new model to prod")
+deployment.move_deployment_files()
 
 ################## Diagnostics and reporting
 # run diagnostics.py and reporting.py for the re-deployed model
