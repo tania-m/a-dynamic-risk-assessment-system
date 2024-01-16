@@ -74,7 +74,7 @@ def merge_multiple_dataframe():
     ingestion_record_path = os.path.join(output_folder_path, ingestion_record_name)
     with open(ingestion_record_path, 'w') as f:
         for record in ingestion_record:
-            f.write(f"{str(record[0])} - File {record[1]} ingested\n")
+            f.write(f"{str(record[0])} - {record[1]}\n")
     print(f"Ingestion record written to {ingestion_record_path}")
 
 
