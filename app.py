@@ -1,3 +1,11 @@
+# Module name: app
+"""
+Endpoints server
+
+Author: tania-m
+Date: January 15th 2024
+"""
+
 from flask import Flask, session, jsonify, request
 import pandas as pd
 import numpy as np
@@ -18,19 +26,26 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
+print(f"Used dataset source folder: {dataset_csv_path}")
 
 prediction_model = None
 
 
 ####################### Prediction Endpoint
 @app.route("/prediction", methods=['POST','OPTIONS'])
-def predict():        
+def predict():
+    """ 
+    Prediction route
+    """  
     #call the prediction function you created in Step 3
     return #add return value for prediction outputs
 
 ####################### Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
-def stats():        
+def stats():  
+    """ 
+    Scoring results route
+    """       
     #check the score of the deployed model
     return #add return value (a single F1 score number)
 
@@ -38,11 +53,19 @@ def stats():
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():        
     #check means, medians, and modes for each column
+    """ 
+    Summary stats route
+    """ 
     return #return a list of all calculated summary statistics
 
 ####################### Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
-def stats():        
+def stats():
+    """ 
+    iagnostics route:
+    - ingestion and training timing
+    - percent NA values
+    """ 
     #check timing and percent NA values
     return #add return value for all diagnostics
 

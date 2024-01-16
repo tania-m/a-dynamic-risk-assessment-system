@@ -1,4 +1,10 @@
+# Module name: fullprocess
+"""
+Automate data science pipeline process
 
+Author: tania-m
+Date: January 15th 2024
+"""
 
 import training
 import scoring

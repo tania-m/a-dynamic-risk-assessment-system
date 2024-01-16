@@ -1,3 +1,10 @@
+# Module name: diagnostics
+"""
+Data science pipeline diagnostics
+
+Author: tania-m
+Date: January 15th 2024
+"""
 
 import pandas as pd
 import numpy as np

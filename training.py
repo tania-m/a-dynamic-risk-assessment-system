@@ -34,6 +34,8 @@ def prepare_dataset(df):
     - The dataset's final column, "exited", is the target variable for predictions
     - The first column, "corporation", will not be used in modeling. 
     - The other three numeric columns will all be used as predictors in the model.
+    
+    Output: X, y dataframes
     """
     
     # Remove first column and keep only predictors
@@ -54,6 +56,11 @@ def prepare_dataset(df):
 
 ################# Function for training the model
 def train_model():
+    """ 
+    Train model
+    
+    Output: Write trained model to local filesystem
+    """
     
     # Using this logistic regression for training
     print("Configuring logistic regression used for training")
