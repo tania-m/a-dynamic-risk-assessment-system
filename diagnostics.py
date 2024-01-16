@@ -4,6 +4,7 @@ import numpy as np
 import timeit
 import pickle
 import os
+import subprocess
 import json
 
 from training import prepare_dataset
@@ -156,6 +157,8 @@ def execution_time():
     Output: list of 2 timing values in seconds
     """
     
+    print("Getting execution times for ingestion and training")
+    
     # Running ingestion command to get timing
     ingestion_command = "python3 ingestion.py"
     ingestion_duration = get_command_timing(ingestion_command)
@@ -164,7 +167,7 @@ def execution_time():
     training_command = "python3 training.py"
     training_duration = get_command_timing(training_command)
 
-    timings =  [ingestion_duration, training_duration]
+    timings = [ingestion_duration, training_duration]
     print(f"Ingestion timing: {timings[0]} seconds")
     print(f"Training timing: {timings[1]} seconds")
     return timings
@@ -180,6 +183,36 @@ def outdated_packages_list():
         the currently installed version of that Python module, and the third 
         column will show the most recent available version of that Python module
     """
+    
+    # installed packages: pip freeze
+    # outdated packages list: pip list --outdated
+
+    print("Getting outdated packages details... ")
+    
+    pip_outdated_list = subprocess.check_output(["pip", "list", "--outdated"])
+    
+    # Parsing the command result to keep only what we want...
+    packages_details_header = [ "Package name", "Installed version", "Latest"]
+    
+    pip_outdated_list = str(pip_outdated_list)
+    packages = pip_outdated_list.split("\\n")
+    packages = packages[2:]
+
+    packages_details = []
+    packages_details.append(packages_details_header)
+    for line in packages:
+        packages_details_row = []
+        details = line.split(" ")
+        data_item_count = 0
+        for word in details:
+            if word != "'" and word != "" and data_item_count < 3:
+                data_item_count = data_item_count + 1
+                packages_details_row.append(word)
+        
+        if(len(packages_details_row) != 0):
+            packages_details.append(packages_details_row)
+    
+    return packages_details
 
 
 if __name__ == '__main__':
@@ -200,4 +233,4 @@ if __name__ == '__main__':
     dataframe_summary(ingested_df, predictors)
     missing_data_analysis(ingested_df)
     execution_time()
-    # outdated_packages_list()
+    outdated_packages_list()
