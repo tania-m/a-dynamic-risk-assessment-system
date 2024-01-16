@@ -2,8 +2,17 @@
 import pandas as pd
 import numpy as np
 import timeit
+import pickle
 import os
 import json
+
+from training import prepare_dataset
+# We'll use the same function for dataset prep
+# as we did in training
+# Preparations done on the dataset:
+# - The dataset's final column, "exited", is the target variable for predictions
+# - The first column, "corporation", will not be used in modeling. 
+# - The other three numeric columns will all be used as predictors in the model.
 
 ################## Load config.json and get environment variables
 with open('config.json','r') as f:
@@ -18,17 +27,37 @@ print(f"Test data folder: {dataset_csv_path}")
 output_folder_path = config['output_folder_path']
 print(f"Output folder: {output_folder_path}")
 
+prod_deployment_path = os.path.join(config['prod_deployment_path']) 
+print(f"Prod deployment folder: {prod_deployment_path}")
+
 
 ################## Function to get model predictions
-def model_predictions():
+def model_predictions(df):
     """ 
     Reads the deployed model and a test dataset, 
     calculate predictions
     
     Output: list containing all predictions
     """
+    
+    print("Computing model predictions")
+    
+    print("Reading deployed model")
+    deployed_model_name = "trainedmodel.pkl"
+    deployed_model_path = os.path.join(prod_deployment_path, deployed_model_name)
+    with open(deployed_model_path, "rb") as file:
+        prod_model = pickle.load(file)
+    print("Prod model loaded!")
+    
+    df_total_rows = df.shape[0]
+    print(f"Dataset for prediction has {df_total_rows} rows")
+    
+    print("Preparing dataset for predictions")
+    X, _ = prepare_dataset(df)
+    print("Computing predictions")
+    y_predicted = list(prod_model.predict(X))
 
-    return 
+    return y_predicted
 
 
 def missing_data_analysis(df):
@@ -135,9 +164,13 @@ if __name__ == '__main__':
 
     predictors = ["lastmonth_activity", "lastyear_activity", "number_of_employees"]
 
-    print(f"Running diagnostics using {ingested_dataset_name}")
-
-    # model_predictions()
+    test_data_name = "testdata.csv"
+    test_data_full_path = os.path.join(test_data_path, test_data_name)
+    test_dataframe = pd.read_csv(test_data_full_path)
+    print(f"Getting prediction diagnostics using {test_data_full_path}")
+    model_predictions(test_dataframe)
+    
+    print(f"Running diagnostics using {ingested_data_full_path}")
     dataframe_summary(ingested_df, predictors)
     missing_data_analysis(ingested_df)
     # execution_time()
