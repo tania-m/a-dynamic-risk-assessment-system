@@ -9,6 +9,7 @@ Date: January 15th 2024
 import json
 import os
 import sys
+import numpy as np
 import pandas as pd
 
 import ingestion
@@ -74,7 +75,6 @@ else:
 ################## Checking for model drift
 # check whether the score from the deployed model is different from the score from the model that uses the newest ingested data
 print("Training model based on new data")
-training.train_model()
 new_model_f1_score = scoring.score_model()
 print(f"New model has f1_score of {new_model_f1_score}")
 
@@ -87,12 +87,15 @@ print(f"Current prod model has f1_score {current_f1_score}")
 
 ################## Deciding whether to proceed, part 2
 # if you found model drift, you should proceed. otherwise, do end the process here
-if True or new_model_f1_score > current_f1_score:
+if float(str(new_model_f1_score)) > float(str(current_f1_score)):
     # Higher f1 score is better
     print("Model drift detected")
 else:
     print("No model drift. Pipeline execution ending")
     sys.exit(0)
+    
+print("Training new model")
+training.train_model()
 
 ##################Re-deployment
 # if you found evidence for model drift, re-run the deployment.py script
