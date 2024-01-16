@@ -25,23 +25,26 @@ URL = "http://127.0.0.1:8080"
 headers = {"Content-type": "application/json", "Accept": "text/plain"}
 
 # call each API endpoint and store the responses
-print("Calling /prediction endpoint")
+# print("Calling /prediction endpoint")
+# predict_dataset_file = "testdata.csv"
+# predicat_dataset_path = os.path.join(test_data_path, predict_dataset_file)
+# predict_base_url = f"{URL}/prediction"
+
+# print(f"POST request to {predict_base_url} for dataset {predict_dataset_file}")
+# predict_response = requests.post(predict_base_url, json={"datafile": predicat_dataset_path}, headers=headers).text
+# print(f"POST request to {predict_base_url} for {predict_dataset_file}, response: {predict_response}")
+
+# scoring_url = f"{URL}/scoring"
+# print(f"Calling /scoring endpoint at {scoring_url}")
+# scoring_response = requests.get(scoring_url, headers=headers).text
+# print(f"{scoring_url} response: {scoring_response}")
+
+print("Calling /summarystats endpoint")
 predict_dataset_file = "testdata.csv"
 predicat_dataset_path = os.path.join(test_data_path, predict_dataset_file)
-predict_base_url = f"{URL}/prediction"
-
-print(f"POST request to {predict_base_url} for dataset {predict_dataset_file}")
-predict_response = requests.post(predict_base_url, json={"datafile": predicat_dataset_path}, headers=headers).text
-print(f"POST request to {predict_base_url} for {predict_dataset_file}, response: {predict_response}")
-
-scoring_url = f"{URL}/scoring"
-print(f"Calling /scoring endpoint at {scoring_url}")
-scoring_response = requests.get(scoring_url, headers=headers).text
-print(f"{scoring_url} response: {scoring_response}")
-
-# print("Calling /summarystats endpoint")
-# summarystats_url = f"{URL}/summarystats"
-# summarystats_response = requests.get(summarystats_url, headers=headers)
+summarystats_url = f"{URL}/summarystats"
+summarystats_response = requests.get(summarystats_url, json={"datafile": predicat_dataset_path}, headers=headers).text
+print(f"{summarystats_url} response for summary of {predicat_dataset_path}: {summarystats_response}")
 
 # print("Calling /diagnostics endpoint")
 # diagnostics_url = f"{URL}/diagnostics"

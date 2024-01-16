@@ -8,10 +8,12 @@ Date: January 15th 2024
 
 from flask import Flask, session, jsonify, request
 import pandas as pd
-from scoring import score_model
-from diagnostics import model_predictions
 import json
 import os
+
+# From the data science pipeline
+from scoring import score_model
+from diagnostics import model_predictions, dataframe_summary
 
 
 ######################Set up variables for use in our script
@@ -45,6 +47,7 @@ def predict():
     
     return str(y_pred)
 
+
 ####################### Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
 def scoring():  
@@ -54,6 +57,7 @@ def scoring():
     
     return str(score_model())
 
+
 ####################### Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():        
@@ -61,7 +65,13 @@ def stats():
     """ 
     Summary stats route
     """ 
-    return #return a list of all calculated summary statistics
+    
+    summary_dataset_path = request.json.get("datafile")
+    print(f"Summary requested for dataset at path {summary_dataset_path}")
+    
+    summary_df = pd.read_csv(summary_dataset_path)
+    return str(dataframe_summary(summary_df))
+
 
 ####################### Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])

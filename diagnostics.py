@@ -108,7 +108,7 @@ def missing_data_analysis(df):
 
 
 ################## Function to get summary statistics
-def dataframe_summary(df, columns_of_interest):
+def dataframe_summary(df):
     """ 
     Computes summary statistics
     
@@ -117,6 +117,7 @@ def dataframe_summary(df, columns_of_interest):
     """
     
     print("Computing dataframe statistics")
+    columns_of_interest = ["lastmonth_activity", "lastyear_activity", "number_of_employees"]
     
     print("Dataframe overview statistics")
     print(df.describe())
@@ -228,8 +229,6 @@ if __name__ == '__main__':
     print(f"Loading dataset {ingested_data_full_path}")
     ingested_df = pd.read_csv(ingested_data_full_path)
 
-    predictors = ["lastmonth_activity", "lastyear_activity", "number_of_employees"]
-
     test_data_name = "testdata.csv"
     test_data_full_path = os.path.join(test_data_path, test_data_name)
     test_dataframe = pd.read_csv(test_data_full_path)
@@ -237,7 +236,7 @@ if __name__ == '__main__':
     model_predictions(test_dataframe)
     
     print(f"Running diagnostics using {ingested_data_full_path}")
-    dataframe_summary(ingested_df, predictors)
+    dataframe_summary(ingested_df)
     missing_data_analysis(ingested_df)
     execution_time()
     outdated_packages_list()
