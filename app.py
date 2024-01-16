@@ -9,7 +9,7 @@ Date: January 15th 2024
 from flask import Flask, session, jsonify, request
 import pandas as pd
 from scoring import score_model
-import diagnostics 
+from diagnostics import model_predictions
 import json
 import os
 
@@ -41,7 +41,7 @@ def predict():
     print("Dataframe for predictions loaded")
     
     print("Getting predictions")
-    y_pred = diagnostics.model_predictions(predict_df)
+    y_pred = model_predictions(predict_df)
     
     return str(y_pred)
 

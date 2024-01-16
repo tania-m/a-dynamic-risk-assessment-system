@@ -25,14 +25,14 @@ URL = "http://127.0.0.1:8080"
 headers = {"Content-type": "application/json", "Accept": "text/plain"}
 
 # call each API endpoint and store the responses
-# print("Calling /predict endpoint")
-# predict_dataset_file = "testdata.csv"
-# predicat_dataset_path = os.path.join(test_data_path, predict_dataset_file)
-# predict_base_url = f"{URL}/predict"
+print("Calling /prediction endpoint")
+predict_dataset_file = "testdata.csv"
+predicat_dataset_path = os.path.join(test_data_path, predict_dataset_file)
+predict_base_url = f"{URL}/prediction"
 
-# print(f"POST request to {predict_base_url}")
-# predict_response = requests.post(predict_base_url, json={"datafile": predict_dataset_file}, headers=headers)
-# print(predict_response)
+print(f"POST request to {predict_base_url} for dataset {predict_dataset_file}")
+predict_response = requests.post(predict_base_url, json={"datafile": predicat_dataset_path}, headers=headers).text
+print(f"POST request to {predict_base_url} for {predict_dataset_file}, response: {predict_response}")
 
 scoring_url = f"{URL}/scoring"
 print(f"Calling /scoring endpoint at {scoring_url}")
