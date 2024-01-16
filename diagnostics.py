@@ -31,18 +31,44 @@ def model_predictions():
     return 
 
 
-def missing_data_analysis(df, columns_of_interest):
+def missing_data_analysis(df):
     """ 
     Calculates what percent of each column of the 
     ingested dataset consists of NA values
     
-    Output:  list with the same number of elements as 
+    Output:  table with total row count being 
+        the same number of elements as 
         the number of columns in the dataset 
-        Each element of the list will be the 
-        percent of NA values in a particular column
+        Each row of the list will be the 
+        column name and the percent of NA values 
+        in that particular column
     """
+    
+    print("Computing dataframe missing data points")
+    
+    columns_of_interest = df.columns
+    print(columns_of_interest)
+    
+    missing_data = []
+    missing_data_row_header = [ "column_name", "missing_data_percentage"]
+    missing_data.append(missing_data_row_header)
+    
+    total_rows = df.shape[0]
+    
+    if total_rows == 0:
+        return []
+    
+    for column in columns_of_interest:
+        missing_data_row = []
+        missing_data_row.append(column)
+        
+        na_values = df[column].isna().sum()
+        missing_data_row.append(na_values/total_rows)
+        
+        missing_data.append(missing_data_row)
 
-    return
+    print(missing_data)
+    return missing_data
 
 
 ################## Function to get summary statistics
@@ -54,12 +80,14 @@ def dataframe_summary(df, columns_of_interest):
     with each row summarizing one predictor column
     """
     
+    print("Computing dataframe statistics")
+    
     print("Dataframe overview statistics")
     print(df.describe())
 
     summary_statistics = []
-    statistics_row = []
-    summary_statistics.append(["column_name", "mean", "median", "std", "min", "max"])
+    statistics_row_header = ["column_name", "mean", "median", "std", "min", "max"]
+    summary_statistics.append(statistics_row_header)
 
     for column in columns_of_interest:
         statistics_row = []
@@ -112,6 +140,6 @@ if __name__ == '__main__':
 
     # model_predictions()
     dataframe_summary(ingested_df, predictors)
-    # missing_data_analysis(ingested_df, predictors)
+    missing_data_analysis(ingested_df)
     # execution_time()
     # outdated_packages_list()
