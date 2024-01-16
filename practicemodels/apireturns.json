@@ -1,0 +1,6 @@
+{
+    "Predictions": "[0, 1, 1, 1, 1]",
+    "Scoring": "0.5714285714285715",
+    "Summary_Stats": "[['column_name', 'mean', 'median', 'std', 'min', 'max'], ['lastmonth_activity', 76.6, 34.0, 96.13948200401332, 0, 234], ['lastyear_activity', 3100.4, 675.0, 5232.801907200386, 3, 12346], ['number_of_employees', 227.2, 25.0, 433.7138457554704, 2, 1000]]",
+    "Diagnostics": "[0.5570444999975734, 0.9830845999968005]"
+}
